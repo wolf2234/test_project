@@ -2,7 +2,6 @@ $(document).ready(function(){
     var form = $('#form_buying_product');
     console.log(form);
 
-
     function basketUpdating(product_id, nmb, is_delete){
         var data = {};
         data.product_id = product_id;
@@ -82,32 +81,5 @@ $(document).ready(function(){
          product_id = $(this).data("product_id")
          nmb = 0;
          basketUpdating(product_id, nmb, is_delete=true)
-     });
-
-    function calculatingBasketAmount(){
-        var total_order_amount = 0;
-        $('.total-product-in-basket-amount').each(function() {
-            total_order_amount = total_order_amount + parseFloat($(this).text());
-        });
-        console.log(total_order_amount);
-        $('#total_order_amount').text(total_order_amount.toFixed(2));
-    };
-
-    $(document).on('change', ".product-in-basket-nmb", function(){
-        var current_nmb = $(this).val();
-        console.log(current_nmb);
-
-        var current_tr = $(this).closest('tr');
-        var current_price = parseFloat(current_tr.find('.product-price').text()).toFixed(2);
-        console.log(current_price);
-        var total_amount = parseFloat(current_nmb*current_price).toFixed(2);
-        console.log(total_amount);
-        current_tr.find('.total-product-in-basket-amount').text(total_amount);
-
-        calculatingBasketAmount();
-    });
-
-
-    calculatingBasketAmount();
-
+     })
 });

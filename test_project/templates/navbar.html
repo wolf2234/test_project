@@ -34,16 +34,23 @@
           <ul class="nav navbar-nav navbar-right">
             <li>
               <div class="basket-container">
-                 <a href="">Basket</a>
-                <div class="basket-items">
-                  <ul class="">
-                      <li>wewe</li>
-                      <li>wewwewe</li>
-                  </ul>
-                </div>
+                 <a href="">Basket <span id="basket_total_amount"></span><span id="basket_total_nmb">
+                   {% if  basket_total_nmb  %}
+                        {{ products_total_nmb }}
+                   {% else %}
+                        (0)
+                   {% endif %}
+                 </span></a>
+                   <div class="basket-items hidden">
+                       <ul class="">
+                           {% for products_in_basket in products_in_basket %}
+                            <li>{{ products_in_basket.product.name }} * {{ products_in_basket.nmb }} pcs. on {{ products_in_basket.price_per_item }} UAH</li>
+                           {% endfor %}
+                       </ul>
               </div>
-            </li>
-          </ul>
-        </div><!--/.nav-collapse -->
-      </div>
-    </nav>
+           </div>
+          </li>
+        </ul>
+      </div><!--/.nav-collapse -->
+    </div>
+</nav>
