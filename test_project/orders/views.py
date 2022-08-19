@@ -4,27 +4,44 @@ from .models import *
 
 # Create your views here.
 
+
 def basket_adding(request):
     return_dict = dict()
-    session_key = request.session.get('session_key', False)
+    session_key = request.session.session_key
     print(request.POST)
     data = request.POST
     product_id = data.get('product_id')
     nmb = data.get('nmb')
-    new_product, created = ProductInBasket.objects.get_or_create(session_key=session_key, product_id=product_id, defaults={"nmb": nmb})
-    if not created:
-        new_product.nmn += int(nmb)
-        new_product.save(force_update=True)
+    is_delete = data.get("is_delete")
 
+    if is_delete == 'true':
+        ProductInBasket.objects.filter(id=product_id).update(is_active=False)
+    else:
+        new_product, created = ProductInBasket.objects.get_or_create(session_key=session_key, product_id=product_id,
+                                                                     is_active=True, defaults={"nmb": nmb})
+        if not created:
+            new_product.nmb += int(nmb)
+            new_product.save(force_update=True)
+
+    #common code for 2 cases
     product_total_basket = ProductInBasket.objects.filter(session_key=session_key, is_active=True)
     product_total_nmb = product_total_basket.count()
     return_dict["product_total_nmb"] = product_total_nmb
     return_dict['products'] = list()
 
-
     for item in product_total_basket:
         product_dict = dict()
+        product_dict["id"] = item.id
         product_dict["name"] = item.product.name
         product_dict["price_per_item"] = item.price_per_item
+        product_dict["nmb"] = item.nmb
         return_dict['products'].append(product_dict)
     return JsonResponse(return_dict)
+
+
+def checkout(request):
+    session_key = request.session.session_key
+    products_in_basket = ProductInBasket.objects.filter(session_key=session_key, is_active=True)
+    return render(request, 'orders/checkout.html', locals())
+
+

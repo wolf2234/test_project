@@ -29,7 +29,7 @@ $(document).ready(function(){
                      console.log(data.products);
                      $('.basket-items ul').html("");
                      $.each(data.products, function(k, v){
-                        $('.basket-items ul').append('<li>'+ v.name+', ' + v.nmb + 'шт. ' + 'по ' + v.price_per_item + 'грн  ' +
+                        $('.basket-items ul').append('<li>'+ v.name+', ' + v.nmb + 'pcs. ' + 'each ' + v.price_per_item + 'UAH  ' +
                             '<a class="delete-item" href="" data-product_id="'+v.id+'">x</a>'+
                             '</li>');
                      });
@@ -82,4 +82,23 @@ $(document).ready(function(){
          nmb = 0;
          basketUpdating(product_id, nmb, is_delete=true)
      })
+     function calculatingBasketAmount(){
+        var total_order_amount = 0
+        $('.total-product-in-basket-amount').each(function(){
+            total_order_amount += parseFloat($(this).text());
+        });
+        console.log(total_order_amount);
+        $('#total_order_amount').text(total_order_amount.toFixed(2));
+     };
+     $(document).on('change', ".product-in-basket-nmb", function(){
+        var current_nmb = $(this).val();
+        var current_tr = $(this).closest('tr');
+        var current_price = parseFloat(current_tr.find('.product-price').text()).toFixed(2);
+        var total_amount = parseFloat(current_nmb*current_price).toFixed(2);
+        current_tr.find('.total-product-in-basket-amount').text(total_amount);
+        calculatingBasketAmount();
+     });
+
+     calculatingBasketAmount();
+
 });

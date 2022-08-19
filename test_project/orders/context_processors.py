@@ -2,11 +2,12 @@ from .models import *
 import random
 import string
 
+
 def getting_basket_info(request):
-    session_key = request.session.get('session_key', False)
+    session_key = request.session.session_key
     if not session_key:
-        request.session['session_key'] = ''.join(random.choices((string.ascii_lowercase + string.ascii_uppercase + string.ascii_letters), k=8))
-        request.session.modified = True
+        request.session['session_key'] = 123
+        request.session.cycle_key()
 
     products_in_basket = ProductInBasket.objects.filter(session_key=session_key, is_active=True)
     product_total_nmb = products_in_basket.count()
