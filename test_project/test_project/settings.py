@@ -16,6 +16,12 @@ from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
+# Commands for transferring data from an existing database.
+# commands:
+# - python3 manage.py dumpdata > intitial_data.json
+# - python3 manage.py dumpdata --indent=3 > intitial_data.json
+
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 

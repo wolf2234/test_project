@@ -7,9 +7,9 @@
         </div>
 
         {% if product_image.product.discount %}
-        <div class="discount-container">
-            <span>{{ product_image.product.discount }}%</span>
-        </div>
+            <div class="discount-container">
+                <span>{{ product_image.product.discount }}%</span>
+            </div>
         {% endif %}
 
         <h4>{{ product_image.product.name }}</h4>
@@ -19,9 +19,9 @@
         <div>
             {{ product_image.product.price }} UAH
         </div>
-        <div class="add-to-cart-btn">
+        <div class="add-to-card-btn">
             <button class="btn btn-success">
-                Add to basket
+                Add to Basket
             </button>
         </div>
     </div>
